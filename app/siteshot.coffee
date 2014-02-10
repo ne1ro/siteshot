@@ -7,13 +7,22 @@ class SiteShot
       @config()
     else
       @config = require '../siteshot.json'
-      console.log @config
+      {parseString} = require 'xml2js'
+      _ = require 'underscore'
+
+      # Read sitemap.xml
+      parseString @fs.readFileSync(@config.sitemap), (err, result) ->
+        if err?
+          throw err
+        else
+          # Get locations list and flatten it
+          routes = _.flatten(_.pluck result.urlset.url, 'loc')
 
   # Generate config file
   config: ->
     example =
-      snapshotDir: "../snapshots"
-      sitemap: '../sitemap.xml'
+      snapshotDir: "snapshots"
+      sitemap: 'sitemap.xml'
       opts:
         cutImg: yes
         cutJs: yes
