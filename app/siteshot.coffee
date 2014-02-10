@@ -3,16 +3,17 @@ class SiteShot
     @fs = require 'fs'
 
     # Check for config param in arguments
-    if process.argv.indexOf 'config' != -1
+    if process.argv.indexOf('config') isnt -1
       @config()
     else
-      @config = require 'siteshot.json'
+      @config = require '../siteshot.json'
+      console.log @config
 
   # Generate config file
   config: ->
     example =
-      snapshotDir: 'snapshots'
-      sitemap: 'sitemap.xml'
+      snapshotDir: "../snapshots"
+      sitemap: '../sitemap.xml'
       opts:
         cutImg: yes
         cutJs: yes
