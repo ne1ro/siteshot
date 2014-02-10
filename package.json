@@ -1,0 +1,41 @@
+{
+  "name": "siteshot",
+  "version": "0.0.0",
+  "description": "Single-page web site snapshot script",
+  "main": "./dist/siteshot.js",
+  "scripts": {
+    "test": "gulp --require coffee-script test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ne1ro/siteshot.git"
+  },
+  "keywords": [
+    "seo",
+    "script",
+    "html",
+    "snapshot"
+  ],
+  "author": "Alexey Kuznetsov <neiro.mail@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ne1ro/siteshot/issues"
+  },
+  "homepage": "https://github.com/ne1ro/siteshot",
+  "dependencies": {
+    "underscore": "1.5.x",
+    "phantom": "0.5.x",
+    "cheerio": "0.13.x",
+    "xml2js": "0.4.x"
+  },
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-coffee": "*",
+    "gulp-util": "*",
+    "coffee-script": "1.6.x",
+    "gulp-jasmine": "*"
+  },
+  "engines": {
+    "node": ">=0.8"
+  }
+}
