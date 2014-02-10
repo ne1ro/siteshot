@@ -6,10 +6,14 @@ lib-cov
 *.out
 *.pid
 *.gz
+*.swp
 
 pids
 logs
 results
+snapshots
 
 npm-debug.log
+sitemap.xml
+siteshot.json
 node_modules
