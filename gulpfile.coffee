@@ -16,7 +16,7 @@ gulp.task 'coffee', ->
     .pipe gulp.dest(paths.build)
 
 gulp.task 'test', ->
-  gulp.src(paths.test).pipe gulp.dest(jasmine())
+  gulp.src(paths.test).pipe jasmine()
 
 gulp.task 'watch', ->
   gulp.watch paths.app, ['coffee', 'test']
