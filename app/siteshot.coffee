@@ -11,6 +11,7 @@ class SiteShot
       _ = require 'underscore'
       phantom = require 'phantom'
       async = require 'async'
+      url = require 'url'
 
       # Read sitemap.xml
       parseString @fs.readFileSync(@config.sitemap), (err, result) ->
@@ -27,14 +28,19 @@ class SiteShot
               ph.createPage (page) ->
                 page.open route, (status) ->
                   if status is 'success'
+                    # Get page HTML
                     page.evaluate (-> document.documentElement.outerHTML), (res) ->
-                      console.log res
-
-            async.series [
-              async.each routes, pageLoad, (err) ->
-                if err?
-                  throw err
-            ]
+                      # Set html prefix name
+                      snapPath = if url.parse(route).path is '/'
+                        '/index.html'
+                      else
+                        "#{url.parse(route).path}.html"
+                      console.log snapPath
+            
+            # Get async each page
+            async.each routes, pageLoad, (err) ->
+              console.log '!---------------fine'
+              ph.exit()
 
   # Generate config file
   config: ->
