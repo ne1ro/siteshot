@@ -25,8 +25,7 @@ class SiteShot
           # Async page loading
           phantom.create (ph) =>
             # Load each route in headless server webkit
-            items = pages = []
-            _.each routes, (route, i) =>
+            pageLoad = (route, callback) =>
               ph.createPage (page) =>
                 page.open route, (status) =>
                   if status is 'success'
@@ -45,10 +44,16 @@ class SiteShot
                         # Write snapshot file
                         @fs.writeFile snapPath, res, (err) =>
                           throw err if err?
-                          items.push i
-                          ph.exit() if items.length is routes.length
                           page.close()
-
+                          console.log "Finish loading #{route} and save it in #{snapPath}"
+                          callback()
+          
+            # Async page load
+            async.eachSeries routes, pageLoad, (err) =>
+              throw err if err?
+              console.log '----------------------------'
+              console.log 'Finish snapshots'
+              ph.exit()
   # Generate config file
   config: ->
     example =
