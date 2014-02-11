@@ -1,22 +1,23 @@
+# Require modules
+fs = require 'fs'
+url = require 'url'
+path = require 'path'
+_ = require 'lodash'
+{parseString} = require 'xml2js'
+phantom = require 'phantom'
+async = require 'async'
+mkdirp = require 'mkdirp'
+
 class SiteShot
   constructor: ->
-    @fs = require 'fs'
-
     # Check for config param in arguments
     if process.argv.indexOf('config') isnt -1
       @config()
     else
-      @config = require "#{__dirname}/siteshot.json"
-      {parseString} = require 'xml2js'
-      _ = require 'underscore'
-      phantom = require 'phantom'
-      async = require 'async'
-      url = require 'url'
-      path = require 'path'
-      mkdirp = require 'mkdirp'
+      config = require "#{process.cwd()}/siteshot.json"
 
       # Read sitemap.xml
-      parseString @fs.readFileSync(@config.sitemap), (err, result) =>
+      parseString fs.readFileSync(config.sitemap), (err, result) =>
         if err?
           throw err
         else
@@ -36,13 +37,13 @@ class SiteShot
                         '/index'
                       else
                         url.parse(route).path
-                      snapPath = "#{@config.snapshotDir}#{snapPrefix}.html"
+                      snapPath = "#{config.snapshotDir}#{snapPrefix}.html"
                       # Create directory
                       mkdirp path.dirname(snapPath), (err) =>
                         throw err if err?
 
                         # Write snapshot file
-                        @fs.writeFile snapPath, res, (err) =>
+                        fs.writeFile snapPath, res, (err) =>
                           throw err if err?
                           page.close()
                           console.log "Finish loading #{route} and save it in #{snapPath}"
@@ -58,13 +59,9 @@ class SiteShot
   # Generate config file
   config: ->
     example =
-      snapshotDir: "snapshots"
-      sitemap: 'sitemap.xml'
-      opts:
-        cutImg: yes
-        cutJs: yes
-        cutCss: yes
-    @fs.writeFileSync 'siteshot.json', JSON.stringify example
+      snapshotDir: "#{process.cwd()}/snapshots"
+      sitemap: "#{process.cwd()}/sitemap.xml"
+    fs.writeFileSync 'siteshot.json', JSON.stringify example, null, 2
 
 module.exports = SiteShot
 new SiteShot
