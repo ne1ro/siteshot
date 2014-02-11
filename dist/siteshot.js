@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var SiteShot;
 
 SiteShot = (function() {
@@ -23,8 +24,8 @@ SiteShot = (function() {
           } else {
             routes = _.flatten(_.pluck(result.urlset.url, 'loc'));
             return phantom.create(function(ph) {
-              var items;
-              items = [];
+              var items, pages;
+              items = pages = [];
               return _.each(routes, function(route, i) {
                 return ph.createPage(function(page) {
                   return page.open(route, function(status) {
@@ -44,10 +45,10 @@ SiteShot = (function() {
                               throw err;
                             }
                             items.push(i);
-                            page.close();
                             if (items.length === routes.length) {
-                              return ph.exit();
+                              ph.exit();
                             }
+                            return page.close();
                           });
                         });
                       });

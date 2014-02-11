@@ -25,7 +25,7 @@ class SiteShot
           # Async page loading
           phantom.create (ph) =>
             # Load each route in headless server webkit
-            items = []
+            items = pages = []
             _.each routes, (route, i) =>
               ph.createPage (page) =>
                 page.open route, (status) =>
@@ -46,8 +46,8 @@ class SiteShot
                         @fs.writeFile snapPath, res, (err) =>
                           throw err if err?
                           items.push i
-                          page.close()
                           ph.exit() if items.length is routes.length
+                          page.close()
 
   # Generate config file
   config: ->
