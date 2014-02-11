@@ -24,9 +24,8 @@ SiteShot = (function() {
           } else {
             routes = _.flatten(_.pluck(result.urlset.url, 'loc'));
             return phantom.create(function(ph) {
-              var items, pages;
-              items = pages = [];
-              return _.each(routes, function(route, i) {
+              var pageLoad;
+              pageLoad = function(route, callback) {
                 return ph.createPage(function(page) {
                   return page.open(route, function(status) {
                     if (status === 'success') {
@@ -44,17 +43,23 @@ SiteShot = (function() {
                             if (err != null) {
                               throw err;
                             }
-                            items.push(i);
-                            if (items.length === routes.length) {
-                              ph.exit();
-                            }
-                            return page.close();
+                            page.close();
+                            console.log("Finish loading " + route + " and save it in " + snapPath);
+                            return callback();
                           });
                         });
                       });
                     }
                   });
                 });
+              };
+              return async.eachSeries(routes, pageLoad, function(err) {
+                if (err != null) {
+                  throw err;
+                }
+                console.log('----------------------------');
+                console.log('Finish snapshots');
+                return ph.exit();
               });
             });
           }

@@ -54,6 +54,7 @@ class SiteShot
               console.log '----------------------------'
               console.log 'Finish snapshots'
               ph.exit()
+
   # Generate config file
   config: ->
     example =
