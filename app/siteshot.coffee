@@ -13,6 +13,7 @@ class SiteShot
       async = require 'async'
       url = require 'url'
       path = require 'path'
+      mkdirp = require 'mkdirp'
 
       # Read sitemap.xml
       parseString @fs.readFileSync(@config.sitemap), (err, result) =>
@@ -21,11 +22,11 @@ class SiteShot
         else
           # Get locations list and flatten it
           routes = _.flatten(_.pluck result.urlset.url, 'loc')
-          
           # Async page loading
           phantom.create (ph) =>
             # Load each route in headless server webkit
-            pageLoad = (route) =>
+            items = []
+            _.each routes, (route, i) =>
               ph.createPage (page) =>
                 page.open route, (status) =>
                   if status is 'success'
@@ -36,18 +37,17 @@ class SiteShot
                         '/index'
                       else
                         url.parse(route).path
-                      snapPath = "#{@config.snapshotDir}#{snapPrefix}"
-                      console.log path.dirname snapPath
+                      snapPath = "#{@config.snapshotDir}#{snapPrefix}.html"
+                      # Create directory
+                      mkdirp path.dirname(snapPath), (err) =>
+                        throw err if err?
 
-                      # Write snapshot file
-                      # @fs.writeFile "#{@config.snapshotDir}#{snapPrefix}.html", res, (err) =>
-                      #   if err?
-                      #     throw err
-            
-            # Get async each page
-            async.each routes, pageLoad, (err) ->
-              console.log '!---------------fine'
-              ph.exit()
+                        # Write snapshot file
+                        @fs.writeFile snapPath, res, (err) =>
+                          throw err if err?
+                          items.push i
+                          page.close()
+                          ph.exit() if items.length is routes.length
 
   # Generate config file
   config: ->
