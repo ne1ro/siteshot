@@ -12,6 +12,7 @@ class SiteShot
       phantom = require 'phantom'
       async = require 'async'
       url = require 'url'
+      path = require 'path'
 
       # Read sitemap.xml
       parseString @fs.readFileSync(@config.sitemap), (err, result) =>
@@ -35,11 +36,13 @@ class SiteShot
                         '/index'
                       else
                         url.parse(route).path
+                      snapPath = "#{@config.snapshotDir}#{snapPrefix}"
+                      console.log path.dirname snapPath
 
                       # Write snapshot file
-                      @fs.writeFile "#{@config.snapshotDir}#{snapPrefix}.html", res, (err) =>
-                        if err?
-                          throw err
+                      # @fs.writeFile "#{@config.snapshotDir}#{snapPrefix}.html", res, (err) =>
+                      #   if err?
+                      #     throw err
             
             # Get async each page
             async.each routes, pageLoad, (err) ->
