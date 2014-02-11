@@ -59,7 +59,7 @@ class SiteShot
   # Generate config file
   config: ->
     example =
-      snapshotDir: "#{process.cwd()}/snapshots/"
+      snapshotDir: "#{process.cwd()}/snapshots"
       sitemap: "#{process.cwd()}/sitemap.xml"
     fs.writeFileSync 'siteshot.json', JSON.stringify example, null, 2
 
