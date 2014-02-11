@@ -16,6 +16,8 @@ if (process.argv.indexOf('config') != -1) {
     snapshotsDir: process.cwd() + '/snapshots/',
     sitemap: process.cwd() + '/sitemap.xml'
   };
+  fs.writeFileSync(process.cwd() + '/siteshot.json', JSON.stringify(example));
+
 }
 else {
   config = require(process.cwd() + '/siteshot.json');
