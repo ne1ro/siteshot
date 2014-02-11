@@ -1,13 +1,13 @@
 {
   "name": "siteshot",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Single-page web site snapshot script",
-  "main": "./dist/siteshot.js",
+  "main": "./siteshot.js",
   "scripts": {
     "test": "gulp --require coffee-script test"
   },
   "bin": {
-    "siteshot": "./dist/siteshot.js"
+    "siteshot": "./siteshot.js"
   },
   "repository": {
     "type": "git",

@@ -7,13 +7,12 @@ coffee = require 'gulp-coffee'
 jasmine = require 'gulp-jasmine'
 
 paths =
-  app: 'app/siteshot.coffee'
+  app: 'siteshot.coffee'
   test: 'spec/*.coffee'
-  build: 'dist'
 
 gulp.task 'coffee', ->
   gulp.src(paths.app).pipe(coffee(bare: yes).on('error', gutil.log))
-    .pipe gulp.dest(paths.build)
+    .pipe gulp.dest('.')
 
 gulp.task 'test', ->
   gulp.src(paths.test).pipe jasmine()
