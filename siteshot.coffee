@@ -6,7 +6,8 @@ class SiteShot
     if process.argv.indexOf('config') isnt -1
       @config()
     else
-      @config = require '../siteshot.json'
+      @config = require "#{__dirname}/siteshot.json"
+      console.log __dirname
       {parseString} = require 'xml2js'
       _ = require 'underscore'
       phantom = require 'phantom'

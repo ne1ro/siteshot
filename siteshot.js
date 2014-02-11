@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 var SiteShot;
 
 SiteShot = (function() {
@@ -8,7 +7,8 @@ SiteShot = (function() {
     if (process.argv.indexOf('config') !== -1) {
       this.config();
     } else {
-      this.config = require('../siteshot.json');
+      this.config = require("" + __dirname + "/siteshot.json");
+      console.log(__dirname);
       parseString = require('xml2js').parseString;
       _ = require('underscore');
       phantom = require('phantom');
