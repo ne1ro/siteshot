@@ -7,7 +7,6 @@ class SiteShot
       @config()
     else
       @config = require "#{__dirname}/siteshot.json"
-      console.log __dirname
       {parseString} = require 'xml2js'
       _ = require 'underscore'
       phantom = require 'phantom'
