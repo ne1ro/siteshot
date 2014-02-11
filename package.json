@@ -25,6 +25,8 @@
   "dependencies": {
     "underscore": "1.5.x",
     "phantom": "0.5.x",
+    "async": "0.2.x",
+    "mkdirp": "0.3.x",
     "cheerio": "0.13.x",
     "xml2js": "0.4.x"
   },

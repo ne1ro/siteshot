@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<url>
+  <loc>http://kartatruda.ru/</loc>
+  <lastmod>2014-02-10T14:32:37+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://kartatruda.ru/akcii</loc>
+  <lastmod>2014-02-10T14:32:37+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://kartatruda.ru/job/1471</loc>
+  <lastmod>2014-02-10T14:32:37+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://kartatruda.ru/company/90?region=6</loc>
+  <lastmod>2014-02-10T14:32:37+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://kartatruda.ru/regions</loc>
+  <lastmod>2014-02-10T14:32:37+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://kartatruda.ru/terminal-map</loc>
+  <lastmod>2014-02-10T14:32:37+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://kartatruda.ru/yasol</loc>
+  <lastmod>2014-02-10T14:32:37+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://kartatruda.ru/professions</loc>
+  <lastmod>2014-02-10T14:32:37+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://kartatruda.ru/jobs</loc>
+  <lastmod>2014-02-10T14:32:37+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+</urlset>
