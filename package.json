@@ -24,7 +24,7 @@
   "homepage": "https://github.com/ne1ro/siteshot",
   "dependencies": {
     "lodash": "2.4.x",
-    "phantom": "0.5.x",
+    "phantom": "~0.6.1",
     "async": "0.2.x",
     "mkdirp": "0.3.x",
     "xml2js": "0.4.x"
