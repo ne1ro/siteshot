@@ -30,24 +30,26 @@ class SiteShot
               ph.createPage (page) =>
                 page.open route, (status) =>
                   if status is 'success'
-                    # Get page HTML
-                    page.evaluate (-> document.documentElement.outerHTML), (res) =>
-                      # Set snapshot name
-                      snapPrefix = if url.parse(route).path is '/'
-                        '/index'
-                      else
-                        url.parse(route).path
-                      snapPath = "#{config.snapshotDir}#{snapPrefix}.html"
-                      # Create directory
-                      mkdirp path.dirname(snapPath), (err) =>
-                        throw err if err?
-
-                        # Write snapshot file
-                        fs.writeFile snapPath, res, (err) =>
+                    setTimeout (->
+                      # Get page HTML
+                      page.evaluate (-> document.documentElement.outerHTML), (res) =>
+                        # Set snapshot name
+                        snapPrefix = if url.parse(route).path is '/'
+                          '/index'
+                        else
+                          url.parse(route).path
+                        snapPath = "#{config.snapshotDir}#{snapPrefix}.html"
+                        # Create directory
+                        mkdirp path.dirname(snapPath), (err) =>
                           throw err if err?
-                          page.close()
-                          console.log "Finish loading #{route} and save it in #{snapPath}"
-                          callback()
+
+                          # Write snapshot file
+                          fs.writeFile snapPath, res, (err) =>
+                            throw err if err?
+                            page.close()
+                            console.log "Finish loading #{route} and save it in #{snapPath}"
+                            callback()
+                    ), config.delay || 0
           
             # Async page load
             async.eachSeries routes, pageLoad, (err) =>
