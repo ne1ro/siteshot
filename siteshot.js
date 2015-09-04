@@ -25,7 +25,7 @@
       if (process.argv.indexOf('config') !== -1) {
         this.config();
       } else {
-        config = require((process.cwd()) + "/siteshot.json");
+        config = require((process.cwd()) + "/config.js");
         parseString(fs.readFileSync(config.sitemap), (function(_this) {
           return function(err, result) {
             var routes;
@@ -40,28 +40,38 @@
                     return page.open(route, function(status) {
                       if (status === 'success') {
                         return setTimeout((function() {
-                          return page.evaluate((function() {
-                            return document.documentElement.outerHTML;
-                          }), (function(_this) {
-                            return function(res) {
-                              var snapPath, snapPrefix;
-                              snapPrefix = url.parse(route).path === '/' ? '/index' : url.parse(route).path;
-                              snapPath = "" + config.snapshotDir + snapPrefix + ".html";
-                              return mkdirp(path.dirname(snapPath), function(err) {
-                                if (err != null) {
-                                  throw err;
-                                }
-                                return fs.writeFile(snapPath, res, function(err) {
+                          var generateHTML;
+                          generateHTML = function() {
+                            return page.evaluate((function() {
+                              return document.documentElement.outerHTML;
+                            }), (function(_this) {
+                              return function(res) {
+                                var snapPath, snapPrefix;
+                                snapPrefix = url.parse(route).path === '/' ? '/index' : url.parse(route).path;
+                                snapPath = "" + config.snapshotDir + snapPrefix + ".html";
+                                return mkdirp(path.dirname(snapPath), function(err) {
                                   if (err != null) {
                                     throw err;
                                   }
-                                  page.close();
-                                  console.log("Finish loading " + route + " and save it in " + snapPath);
-                                  return callback();
+                                  return fs.writeFile(snapPath, res, function(err) {
+                                    if (err != null) {
+                                      throw err;
+                                    }
+                                    page.close();
+                                    console.log("Finish loading " + route + " and save it in " + snapPath);
+                                    return callback();
+                                  });
                                 });
-                              });
-                            };
-                          })(this));
+                              };
+                            })(this));
+                          };
+                          if (typeof config.pageModifier === 'function') {
+                            return config.pageModifier(page, function() {
+                              return generateHTML();
+                            });
+                          } else {
+                            return generateHTML();
+                          }
                         }), config.delay || 0);
                       }
                     });
@@ -86,9 +96,11 @@
       var example;
       example = {
         snapshotDir: (process.cwd()) + "/snapshots",
-        sitemap: (process.cwd()) + "/sitemap.xml"
+        sitemap: (process.cwd()) + "/sitemap.xml",
+        delay: 500,
+        pageModifier: null
       };
-      return fs.writeFileSync('siteshot.json', JSON.stringify(example, null, 2));
+      return fs.writeFileSync('config.js', JSON.stringify(example, null, 2));
     };
 
     return SiteShot;
