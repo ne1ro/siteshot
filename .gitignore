@@ -16,4 +16,5 @@ snapshots
 npm-debug.log
 sitemap.xml
 siteshot.json
+config.js
 node_modules
