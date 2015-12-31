@@ -51,14 +51,14 @@ class SiteShot
                               console.log "Finish loading #{route} and save it in #{snapPath}"
                               callback()
 
-                      if (typeof config.pageModifier == 'function')
+                      if (typeof config.pageModifier is 'function')
                         config.pageModifier(page, ->
-                          generateHTML();
+                          generateHTML()
                         );
                       else
-                        generateHTML();
-                    ), config.delay || 0
-          
+                        generateHTML()
+                    ), config.delay or 0
+
             # Async page load
             async.eachSeries routes, pageLoad, (err) =>
               throw err if err?
