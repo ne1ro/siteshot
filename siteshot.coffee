@@ -1,4 +1,4 @@
-# Require modules
+# Required modules
 fs = require 'fs'
 url = require 'url'
 path = require 'path'
@@ -7,6 +7,7 @@ _ = require 'lodash'
 phantom = require 'phantom'
 async = require 'async'
 mkdirp = require 'mkdirp'
+
 
 class SiteShot
   constructor: ->
@@ -23,6 +24,7 @@ class SiteShot
         else
           # Get locations list and flatten it
           routes = _.flatten(_.pluck result.urlset.url, 'loc')
+
           # Async page loading
           phantom.create (ph) =>
             # Load each route in headless server webkit
@@ -39,7 +41,9 @@ class SiteShot
                             '/index'
                           else
                             url.parse(route).path
+
                           snapPath = "#{config.snapshotDir}#{snapPrefix}.html"
+
                           # Create directory
                           mkdirp path.dirname(snapPath), (err) =>
                             throw err if err?
@@ -62,18 +66,23 @@ class SiteShot
             # Async page load
             async.eachSeries routes, pageLoad, (err) =>
               throw err if err?
+
               console.log '----------------------------'
               console.log 'Finish snapshots'
               ph.exit()
+
 
   # Generate config file
   config: ->
     example =
       snapshotDir: "#{process.cwd()}/snapshots"
       sitemap: "#{process.cwd()}/sitemap.xml"
-      delay: 500,
+      delay: 500
       pageModifier: null
-    fs.writeFileSync 'config.js', JSON.stringify example, null, 2
+
+    fs.writeFileSync 'config.js', "module.exports = \
+    #{JSON.stringify example, null, 2};"
+
 
 module.exports = SiteShot
 new SiteShot
