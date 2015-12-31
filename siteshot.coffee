@@ -54,7 +54,7 @@ class SiteShot
                       if (typeof config.pageModifier is 'function')
                         config.pageModifier(page, ->
                           generateHTML()
-                        );
+                        )
                       else
                         generateHTML()
                     ), config.delay or 0
