@@ -35,7 +35,7 @@ class SiteShot
                     setTimeout (->
                       generateHTML = ->
                         # Get page HTML
-                        page.evaluate (-> document.documentElement.outerHTML), (res) =>
+                        page.evaluate (-> (new XMLSerializer).serializeToString(document.doctype) + document.documentElement.outerHTML), (res) =>
                           # Set snapshot name
                           snapPrefix = if url.parse(route).path is '/'
                             '/index'
