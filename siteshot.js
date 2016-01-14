@@ -43,7 +43,7 @@
                           var generateHTML;
                           generateHTML = function() {
                             return page.evaluate((function() {
-                              return document.documentElement.outerHTML;
+                              return (new XMLSerializer).serializeToString(document.doctype) + document.documentElement.outerHTML;
                             }), (function(_this) {
                               return function(res) {
                                 var snapPath, snapPrefix;
