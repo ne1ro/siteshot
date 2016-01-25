@@ -34,7 +34,7 @@
               throw err;
             } else {
               routes = _.flatten(_.pluck(result.urlset.url, 'loc'));
-              return phantom.create(function(ph) {
+              return phantom.create('--ignore-ssl-errors=yes', '--ssl-protocol=any', function(ph) {
                 var pageLoad;
                 pageLoad = function(route, callback) {
                   return ph.createPage(function(page) {
