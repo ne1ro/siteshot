@@ -1,6 +1,6 @@
 {
   "name": "siteshot",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Single-page web site snapshot script",
   "main": "./siteshot.js",
   "bin": {

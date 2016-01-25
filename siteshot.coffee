@@ -26,7 +26,7 @@ class SiteShot
           routes = _.flatten(_.pluck result.urlset.url, 'loc')
 
           # Async page loading
-          phantom.create (ph) =>
+          phantom.create '--ignore-ssl-errors=yes', '--ssl-protocol=any', (ph) =>
             # Load each route in headless server webkit
             pageLoad = (route, callback) =>
               ph.createPage (page) =>
